@@ -1,0 +1,23 @@
+{
+  "name": "Discord.js-Slash-Command-Bot-Framework",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HDR/Discord.js-Slash-Command-Bot-Framework.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HDR/Discord.js-Slash-Command-Bot-Framework/issues"
+  },
+  "homepage": "https://github.com/HDR/Discord.js-Slash-Command-Bot-Framework#readme",
+  "dependencies": {
+    "discord.js": "^12.5.1"
+  }
+}
