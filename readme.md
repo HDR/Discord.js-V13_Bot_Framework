@@ -2,12 +2,12 @@
 
 A simple framework that should help you build your first slash command supported discord bot
 
-##Requirements
+## Requirements
 
 - NPM
 - A discord developer account
 
-###Setup
+### Setup
 
 Put your bot token in config.json and run
 
@@ -16,7 +16,7 @@ npm install
 ```
 
 
-###Running the bot
+### Running the bot
 
 Use node to run the bot
 ```
@@ -24,12 +24,12 @@ node index.js
 ```
 
 
-##Images
+## Images
 
 ![](https://i.imgur.com/rkBX5dV.png)
 
 
-##Links
+## Links
 
 [advaith1's slash command guide](https://gist.github.com/advaith1/287e69c3347ef5165c0dbde00aa305d2)
 
