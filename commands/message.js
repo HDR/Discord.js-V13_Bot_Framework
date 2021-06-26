@@ -13,20 +13,10 @@ module.exports = {
             "required": true
         }
     ],
-    choices: [], //Choices allow users to pick a pre-determined option, see https://discord.com/developers/docs/interactions/slash-commands#applicationcommandoptionchoice for choice options
 
-
-    execute: function (channel, args, member, interaction) {
-        //Reply to the interaction (slash command)
-        constants.client.api.interactions(interaction.id, interaction.token).callback.post({
-            data: {
-                //response types are not yet fully implemented, see https://discord.com/developers/docs/interactions/slash-commands#interaction-response-interactionresponsetype
-                type: 4,
-                data: {
-                    //In this case we reply with a string, it is also possible to use tts and embeds as a reply to a slash command.
-                    content: `Hello World ${args[0].value}`
-                }
-            }
-        })
+    //This is the main function in the command, and it gets fired whenever a slash command matching the name above gets fired.
+    execute: function (interaction) {
+        //In this case we reply with a string, it is also possible to use text to speech and embeds as a reply to a slash command.
+        interaction.reply(`Hello World ${interaction.options.get('string').value}`).then()
     }
 }

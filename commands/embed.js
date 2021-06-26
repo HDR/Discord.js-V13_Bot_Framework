@@ -14,23 +14,14 @@ module.exports = {
             "required": true
         }
     ],
-    choices: [], //Choices allow users to pick a pre-determined option, see https://discord.com/developers/docs/interactions/slash-commands#applicationcommandoptionchoice for choice options
 
-
-    execute: function (channel, args, member, interaction) {
+    execute: function (interaction) {
 
         //Build the embed
         const Embed = new Discord.MessageEmbed
-        Embed.addField('Message', `Hello World ${args[0].value}`)
+        Embed.addField('Message', `Hello World ${interaction.options.get('string').value}`)
 
-        //Reply to the interaction (slash command)
-        constants.client.api.interactions(interaction.id, interaction.token).callback.post({
-            data: {
-                type: 4,
-                data: {
-                    embeds: [Embed]
-                }
-            }
-        })
+        //Reply to the interaction with the embed we just built
+        interaction.reply({ embeds: [Embed]}).then()
     }
 }

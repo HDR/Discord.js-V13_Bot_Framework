@@ -1,50 +1,67 @@
-const constants = require('./constants') //Require constants so we can use the client object
+const {client} = require("./constants");
 const Discord = require('discord.js')
-const { token } = require('./config.json') //Pull the discord bot token from config.json
-const fs = require('fs') //Require fs so we can access files
-
-//Get all commands
+const { token, guildID } = require('./config.json')
+const fs = require('fs')
 const commands = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+const events = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
+client.commands = new Discord.Collection();
 
-//Get all handlers
-const handlers = fs.readdirSync('./handlers').filter(file => file.endsWith('.js'));
-constants.client.commands = new Discord.Collection();
+//Docs -
+// Slash commands: https://deploy-preview-638--discordjs-guide.netlify.app/interactions/registering-slash-commands.html
+// Buttons: https://deploy-preview-674--discordjs-guide.netlify.app/interactions/buttons.html
+// v12 to V13: https://deploy-preview-551--discordjs-guide.netlify.app/additional-info/changes-in-v13.html#rolemanager
 
-//Register every command in the commands (Commands are registered globally, this means it will take up to an hour before they show up.
 for (const file of commands) {
     const command = require(`./commands/${file}`);
-    constants.client.commands.set(command.name, command)
+    client.commands.set(command.name, command)
+    const data = {
+        name: command.name,
+        description: command.description,
+        options: command.options
+    };
+}
 
-    //Uncomment the line below and comment the other one if you want global commands, guild commands will update instantly, while global commands may take up to an hour before they show up.
-    //constants.client.api.applications('Bot Client ID').commands.post({data: {
-    constants.client.api.applications('Bot Client ID').guilds('Guild ID').commands.post({data: {
+async function registerCommands(){
+    const data = []
+    for (const file of commands) {
+        if (!client.application?.owner) await client.application?.fetch();
+        const command = require(`./commands/${file}`);
+        client.commands.set(command.name, command)
+        data.push({
             name: command.name,
             description: command.description,
             options: command.options
-       }}).then()
-}
+        },);
 
-//Handlers are used for different discord events, see the handlers folder for more information, handlers can also be built into command files, but are separated in this case for ease of use
-for (const file of handlers) {
-    const handler = require(`./handlers/${file}`);
-    constants.client.commands.set(handler.name, handler)
-}
-
-//Runs whenever one of the bots slash commands are used, executes the corresponding command in the commands folder
-constants.client.ws.on('INTERACTION_CREATE', interaction => {
-    //Fetch the guild the command was used in
-    const guild = constants.client.guilds.cache.get(interaction.guild_id)
-    //Fetch the channel the command was used in
-    const channel = guild.channels.cache.get(interaction.channel_id);
-    //fetch the member that executed the command
-    const member = guild.members.cache.get(interaction.member.user.id)
-    const command = constants.client.commands.get(interaction.data.name) || constants.client.commands.find(cmd => cmd.name && cmd.name.includes(interaction.data.name));
-    try{
-        command.execute(channel, interaction.data.options, member, interaction);
-    } catch (error) {
-        console.error(error);
     }
-})
+    //Register commands in the commands folder in bulk, please keep in mind that Global commands take up to an hour before they update or show up on your server.
+    await client.application?.commands.set(data).then();
+    //Comment the above line and uncomment the below line if you want guild commands, guild commands are instantly updated but they work on a per guild basis, this requires specifying your guild's ID in config.json
+    //await client.guilds.cache.get(guildID)?.commands.set(data).then();
+}
 
-//Log in with the token from config.json
-constants.client.login(token).then();
+//We put the events here.
+for (const file of events) {
+    require(`./events/${file}`);
+}
+
+//Get interaction events to check if a command is fired, or a button is pressed.
+client.on('interaction', async interaction => {
+    //Check if interaction is a button press.
+    if (interaction.isMessageComponent() && interaction.componentType === 'BUTTON'){
+        //Get the original interaction command name, this only works if the intent is NOT ephemeral.
+        const buttonCommand = client.commands.get(interaction.message.interaction.commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(interaction.message.interaction.commandName));
+        //We use button id's to run other functions in the same file as the original command, this is a workaround and requires all button id's to start with "button_" the text after that is the actual function you want to run.
+        buttonCommand[interaction.customID.substr(7, interaction.customID.length-7)](interaction);
+    } else {
+        //If it's not we run it like a nromal command
+        try{
+            const command = client.commands.get(interaction.commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(interaction.commandName));
+            command.execute(interaction);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+});
+
+client.login(token).then(registerCommands).then();
