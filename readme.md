@@ -1,4 +1,4 @@
-# Discord.js Slash Command Framework
+# Discord.js Slash Command/Button Framework
 
 A simple framework that should help you build your first slash command supported discord bot
 
