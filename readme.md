@@ -15,6 +15,10 @@ Put your bot token in config.json and run
 npm install
 ```
 
+Enable Priviledged Gateway Intents at https://discord.com/developers/
+
+![](https://i.imgur.com/LaWpVDN.png)
+
 
 ### Running the bot
 
