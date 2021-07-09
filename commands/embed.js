@@ -19,7 +19,7 @@ module.exports = {
 
         //Build the embed
         const Embed = new Discord.MessageEmbed
-        Embed.addField('Message', `Hello World ${interaction.options.get('string').value}`)
+        Embed.addField('Message', interaction.options.get('string').value)
 
         //Reply to the interaction with the embed we just built
         interaction.reply({ embeds: [Embed]}).then()

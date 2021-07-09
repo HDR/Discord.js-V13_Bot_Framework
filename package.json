@@ -18,6 +18,6 @@
   },
   "homepage": "https://github.com/HDR/Discord.js-Slash-Command-Bot-Framework#readme",
   "dependencies": {
-    "discord.js": "^13.0.0-dev.4714a961b87746b0f85214c756614d276666f285"
+    "discord.js": "^13.0.0-dev.5b6be0c.1625789033"
   }
 }

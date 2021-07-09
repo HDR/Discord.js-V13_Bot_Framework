@@ -8,7 +8,7 @@ module.exports = {
     execute: function (interaction) {
 
         //This is a single row of buttons, you can have up to 5 rows per message.
-        const row = new MessageActionRow().addComponents(new MessageButton().setCustomID('button_example').setLabel("Click Me").setStyle("PRIMARY").setEmoji('👋'))
+        const row = new MessageActionRow().addComponents(new MessageButton().setCustomId('button_example').setLabel("Click Me").setStyle("PRIMARY").setEmoji('👋'))
 
         //This is a single button, which we add to Row1, each row can have up to 5 buttons.
         //Buttons can have multiple styles, see https://support.discord.com/hc/en-us/articles/1500012250861-Bots-Buttons
