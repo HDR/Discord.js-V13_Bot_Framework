@@ -14,11 +14,6 @@ client.commands = new Discord.Collection();
 for (const file of commands) {
     const command = require(`./commands/${file}`);
     client.commands.set(command.name, command)
-    const data = {
-        name: command.name,
-        description: command.description,
-        options: command.options
-    };
 }
 
 async function registerCommands(){
