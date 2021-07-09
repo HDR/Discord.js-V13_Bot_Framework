@@ -46,7 +46,7 @@ client.on('interactionCreate', async interaction => {
     //Check if interaction is a button press.
     if (interaction.isMessageComponent() && interaction.componentType === 'BUTTON'){
         //Get the original interaction command name, this only works if the intent is NOT ephemeral.
-        const buttonCommand = client.commands.get(interaction.message.interaction.commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(interaction.message.interaction.commandName));
+        const buttonCommand = client.commands.get(interaction.message.interaction.commandName);
         //We use button id's to run other functions in the same file as the original command, this is a workaround and requires all button id's to start with "button_" the text after that is the actual function you want to run.
         buttonCommand[interaction.customId.substr(7, interaction.customId.length-7)](interaction);
     } else {
