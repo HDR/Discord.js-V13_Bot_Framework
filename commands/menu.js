@@ -26,5 +26,17 @@ module.exports = {
 
         //Reply to the interaction with a message and the Row we just built
         interaction.reply({content: "Menus make it easy to select something quickly and efficiently", components: [row]}).then()
+    },
+
+    hello: async function (interaction) {
+        await interaction.deferUpdate().then();
+        //Edit the previous reply
+        await interaction.editReply({content: 'Hello!'}).then();
+    },
+
+    world: async function (interaction) {
+        await interaction.deferUpdate().then();
+        //Edit the previous reply
+        await interaction.editReply({content: 'World!'}).then();
     }
 }
