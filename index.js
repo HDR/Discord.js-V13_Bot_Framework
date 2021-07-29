@@ -42,7 +42,6 @@ for (const file of events) {
 
 //Get interaction events to check if a command is fired, or a button is pressed.
 client.on('interactionCreate', async interaction => {
-    console.log(interaction)
     //Check if interaction is a button press.
     if (interaction.isMessageComponent() && interaction.componentType === 'BUTTON'){
         //Get the original interaction command name, this only works if the intent is NOT ephemeral.
