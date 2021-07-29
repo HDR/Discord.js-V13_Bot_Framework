@@ -1,6 +1,6 @@
-# Discord.js Slash Command/Button Framework
+# Discord.js V13 Bot Framework
 
-A simple framework that should help you build your first slash command and button discord bot
+A simple framework that should help you build your first Disord.js V13 bot, with Slash Commands, Interaction Menus & Buttons
 
 ## Requirements
 
