@@ -1,6 +1,4 @@
-const constants = require('../constants') //Require constants so we can use the client object
 const Discord = require("discord.js"); //Require discord so we can build embeds
-
 
 module.exports = {
     name: 'embed', //name is the actual slash command used in discord, this can be anything without spaces.
@@ -16,7 +14,6 @@ module.exports = {
     ],
 
     execute: function (interaction) {
-
         //Build the embed
         const Embed = new Discord.MessageEmbed
         Embed.addField('Message', interaction.options.get('string').value)
